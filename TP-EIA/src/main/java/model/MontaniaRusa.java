@@ -2,47 +2,27 @@ package model;
 
 public class MontaniaRusa {
 
-	Motor motor;
-	Bateria bateria;
-	TanqueCombustible tanque;
-	public Recomendacion recomendacion;
-	
-	public MontaniaRusa(Motor motor, Bateria bateria, TanqueCombustible tanque) {
-		this.motor = motor;
-		this.bateria = bateria;
-		this.tanque = tanque;
-		this.recomendacion = new Recomendacion();
-	}
+	private Engrane engranes;
+	private Bateria bateria_plc;
+	private DepositoAceite deposito_aceite;
+	private Cinturon cinturones;
+	private Monitoreo monitoreo;
+	private TensionElectrica tension;
+	private Freno Frenos;
+	public Diagnostico_Operatividad consideracion;
 
-	public Motor getMotor() {
-		return motor;
-	}
-	
-	public void setMotor(Motor motor) {
-		this.motor = motor;
-	}
-
-	public Bateria getBateria() {
-		return bateria;
-	}
-
-	public void setBateria(Bateria bateria) {
-		this.bateria = bateria;
-	}
-
-	public TanqueCombustible getTanque() {
-		return tanque;
-	}
-
-	public void setTanque(TanqueCombustible tanque) {
-		this.tanque = tanque;
-	}
-	
-	public Recomendacion getRecomendacion() {
-		return recomendacion;
-	}
-
-	public void setRecomendacion(Recomendacion recomendacion) {
-		this.recomendacion = recomendacion;
+	public MontaniaRusa(Engrane engranes, Bateria bateria_plc, DepositoAceite deposito_aceite, Cinturon cinturones,
+			Monitoreo monitoreo, TensionElectrica tension, Freno frenos, Diagnostico_Operatividad consideracion) {
+		super();
+		this.engranes = engranes;
+		this.bateria_plc = bateria_plc;
+		this.deposito_aceite = deposito_aceite;
+		this.cinturones = cinturones;
+		this.monitoreo = monitoreo;
+		this.tension = tension;
+		Frenos = frenos;
+		this.consideraciones = consideracion;
 	}
 }
+
+	

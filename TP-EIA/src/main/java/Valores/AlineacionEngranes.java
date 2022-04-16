@@ -1,10 +1,10 @@
-package model;
+package Valores;
 
 public enum AlineacionEngranes {
 	Alineado,
 	Desalineado;
 	
-	public  Boolean isa(NivelBateria nivel) {
-		return this.toString() == nivel.toString();
+	public  Boolean compare(AlineacionEngranes alineacion) {
+		return this.toString() == alineacion.toString();
 	}
 }
