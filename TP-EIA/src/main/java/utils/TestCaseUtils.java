@@ -1,6 +1,6 @@
 package utils;
 
-import model.Automovil;
+import model.MontaniaRusa;
 import model.Bateria;
 import model.Recomendacion;
 import model.AccionRecomendada;
@@ -20,7 +20,7 @@ public class TestCaseUtils {
 		print("");
 	}
 
-	public static void print(Automovil automovil) {
+	public static void print(MontaniaRusa automovil) {
 
 		Motor motor = automovil.getMotor();
 		Bateria bateria = automovil.getBateria();

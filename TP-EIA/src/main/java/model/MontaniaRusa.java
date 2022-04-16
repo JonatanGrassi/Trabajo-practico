@@ -1,13 +1,13 @@
 package model;
 
-public class Automovil {
+public class MontaniaRusa {
 
 	Motor motor;
 	Bateria bateria;
 	TanqueCombustible tanque;
 	public Recomendacion recomendacion;
 	
-	public Automovil(Motor motor, Bateria bateria, TanqueCombustible tanque) {
+	public MontaniaRusa(Motor motor, Bateria bateria, TanqueCombustible tanque) {
 		this.motor = motor;
 		this.bateria = bateria;
 		this.tanque = tanque;
