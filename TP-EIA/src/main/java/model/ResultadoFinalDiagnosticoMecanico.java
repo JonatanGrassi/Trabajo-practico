@@ -1,10 +1,12 @@
 package model;
 
-public class DiagnosticoPreliminar {
-	 public NivelBateria nivelBateria;
-	 public NivelCombustible nivelCombustible;
-	 public ResultadoDiagnosticoPreliminar resultado;
-	 
+public class ResultadoFinalDiagnosticoMecanico {
+	Alineacion_engranes
+	Desgaste_Cinturon
+	Integridad_Frenos
+	Nivel_deposito_aceite
+
+
 	 public  DiagnosticoPreliminar() {
 		 this.nivelBateria = NivelBateria.NoDeterminado;
 		 this.nivelCombustible = NivelCombustible.NoDeterminado;

@@ -2,7 +2,7 @@ package model;
 
 public class Freno {
 	int espesorPastillas;
-	EstadoCorrocion corrocion;
+	Boolean corrocion;
 	int potenciaImanes;
 	
 	static int MIN_ESPESOR_PASTILLAS = 2;
@@ -23,21 +23,6 @@ public class Freno {
 		this.espesorPastillas = espesorPastillas;
 	}
 	
-	public int getEspesorPastillas() {
-		return espesorPastillas;
-	}
-	
-	public EstadoCorrocion getCorrocion() {
-		return corrocion;
-	}
-	public void setCorrocion(EstadoCorrocion corrocion) {
-		this.corrocion = corrocion;
-	}
-	
-	
-	public int getPotenciaImanes() {
-		return potenciaImanes;
-	}
 	public void setPotenciaImanes(int potenciaImanes) {
 		if (potenciaImanes > MAX_POTENCIA_IMANES) {
 			throw new IllegalArgumentException("potenciaImanes: maximo valor permitido " + MAX_POTENCIA_IMANES + " %.");
@@ -49,4 +34,20 @@ public class Freno {
 		
 		this.potenciaImanes = potenciaImanes;
 	}
+	
+	public int getEspesorPastillas() {
+		return espesorPastillas;
+	}
+	
+	public Boolean getCorrocion() {
+		return corrocion;
+	}
+	public void setCorrocion(Boolean corrocion ) {
+		this.corrocion = corrocion;
+	}
+	
+	public int getPotenciaImanes() {
+		return potenciaImanes;
+	}
+	
 }
