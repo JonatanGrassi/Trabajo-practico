@@ -6,7 +6,7 @@ public enum IntegridadFrenos {
 	FallaFrenosMagneticos,
 	FrenosDañadosCorrosion,
 	NoDeterminado;
-	public Boolean isa(IntegridadFrenos integridad) {
+	public Boolean compare(IntegridadFrenos integridad) {
 		return this.toString() == integridad.toString();
 	}
 }

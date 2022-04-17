@@ -1,9 +1,9 @@
 package conceptos;
 
 public class Freno {
-	int espesorPastillas;
-	Boolean corrocion;
-	int potenciaImanes;
+	public int espesorPastillas;
+	public Boolean corrocion;
+	public int potenciaImanes;
 	
 	static int MIN_ESPESOR_PASTILLAS = 2;
 	static int MAX_ESPESOR_PASTILLAS = 14;

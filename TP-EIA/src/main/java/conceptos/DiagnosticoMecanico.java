@@ -3,18 +3,29 @@ package conceptos;
 import atributos.AlineacionEngranes;
 import atributos.DesgasteCinturon;
 import atributos.IntegridadFrenos;
+import atributos.ResultadoFinalDiagnosticoMecanico;
 
 public class DiagnosticoMecanico {
-	AlineacionEngranes alineacionEngranes;
-	DesgasteCinturon desgasteCinturon;
-	IntegridadFrenos integridadFrenos;
-	NivelDepositoAceite nivelDepositoAceite;
+	public AlineacionEngranes alineacionEngranes;
+	public DesgasteCinturon desgasteCinturon;
+	public IntegridadFrenos integridadFrenos;
+	public NivelDepositoAceite nivelDepositoAceite;
+	public ResultadoFinalDiagnosticoMecanico resultadoMecanico;
 
 	public DiagnosticoMecanico() {
 		this.alineacionEngranes = AlineacionEngranes.NoDeterminado;
 		this.desgasteCinturon = DesgasteCinturon.NoDeterminado;
 		this.integridadFrenos = IntegridadFrenos.NoDeterminado;
 		this.nivelDepositoAceite = NivelDepositoAceite.NoDeterminado;
+		this.resultadoMecanico = ResultadoFinalDiagnosticoMecanico.NoDeterminado;
+	}
+
+	public ResultadoFinalDiagnosticoMecanico getResultadoMecanico() {
+		return resultadoMecanico;
+	}
+
+	public void setResultadoMecanico(ResultadoFinalDiagnosticoMecanico resultadoMecanico) {
+		this.resultadoMecanico = resultadoMecanico;
 	}
 
 	public AlineacionEngranes getAlineacionEngranes() {

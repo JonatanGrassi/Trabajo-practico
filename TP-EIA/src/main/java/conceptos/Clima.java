@@ -1,8 +1,8 @@
 package conceptos;
 
 public class Clima {
-	private int intensidadPrecipitaciones;
-	private int intensidadRafagas;
+	public int intensidadPrecipitaciones;
+	public int intensidadRafagas;
 	
 	public Clima(int intensidadPrecipitaciones, int intensidadRafagas) {
 		this.intensidadPrecipitaciones = intensidadPrecipitaciones;

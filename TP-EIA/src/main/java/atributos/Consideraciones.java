@@ -10,9 +10,10 @@ public enum Consideraciones {
 	RevisarCinturonesSeguridad,
 	CargarBateriaPLC,
 	JuegoNoOperativoPorClima,
-	Operativo;
+	Operativo,
+	NoDeterminada;
 	
-	public Boolean isa(Consideraciones recomendacion) {
+	public Boolean compare(Consideraciones recomendacion) {
 		return this.toString() == recomendacion.toString();
 	}
 }

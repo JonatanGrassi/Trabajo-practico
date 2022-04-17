@@ -4,7 +4,7 @@ import conceptos.AccionRecomendada;
 import conceptos.Bateria;
 import conceptos.MontaniaRusa;
 import conceptos.Motor;
-import conceptos.Recomendacion;
+import conceptos.DiagnosticoOperatividad;
 import conceptos.ResultadoDiagnosticoPreliminar;
 import conceptos.TanqueCombustible;
 
@@ -34,7 +34,7 @@ public class TestCaseUtils {
 		print();
 	}
 
-	public static void assertResults(Recomendacion recomendacion, AccionRecomendada valorEsperado) {
+	public static void assertResults(DiagnosticoOperatividad recomendacion, AccionRecomendada valorEsperado) {
 		AccionRecomendada accion = recomendacion.getAccion();
 		printResults(accion.toString(), valorEsperado.toString());
 		assert(accion.isa(valorEsperado));

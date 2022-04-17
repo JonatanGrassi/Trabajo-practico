@@ -2,28 +2,78 @@
 package RulesMontaniaRusa
 
 //list any import classes here.
-
-
+import conceptos.MontaniaRusa
+import conceptos.Clima
+import conceptos.DiagnosticoOperatividad
+import conceptos.DiagnosticoElectromecanico
+import conceptos.DiagnosticoMecanico
+import conceptos.DiagnosticoElectrico
+import atributos.ResultadoFinalDiagnosticoElectrico
+import atributos.ResultadoAnalisisClimatico
+import atributos.ResultadoFinalDiagnosticoElectromecanico
+import atributos.ResultadoFinalDiagnosticoMecanico
+import atributos.IntegridadFrenos
 
 //declare any global variables here
 
-
-
-
-rule "Your First Rule"
-
+rule "R01 - Rafaga Clima Desfavorable"
     when
-        //conditions
-    then
-        //actions
-
+        $atraccion: MontaniaRusa(clima.intensidadRafagas > 70,
+        	resultadoFinal.analisisClimatico.resultadoAnalisis.compare(ResultadoAnalisisClimatico.NoDeterminado) 
+        )
+    then 
+    	modify($atraccion){
+       		resultadoFinal.analisisClimatico.setResultadoAnalisis(ResultadoAnalisisClimatico.ClimaDesfavorable);
+		}
 end
 
-rule "Your Second Rule"
-    //include attributes such as "salience" here...
+rule "R02 - Precipitaciones Clima Desfavorable"
     when
-        //conditions
+        $atraccion: MontaniaRusa(
+    		clima.intensidadPrecipitaciones > 10,
+        	resultadoFinal.analisisClimatico.resultadoAnalisis.compare(ResultadoAnalisisClimatico.NoDeterminado) 
+        )
     then
-        //actions
-
+    	modify($atraccion){
+       		resultadoFinal.analisisClimatico.setResultadoAnalisis(ResultadoAnalisisClimatico.ClimaDesfavorable); 
+		}
 end
+
+rule "R03 - Clima Favorable"
+    when
+        $atraccion: MontaniaRusa(
+    		clima.intensidadPrecipitaciones <= 10,
+    		clima.intensidadRafagas <= 70,
+        	resultadoFinal.analisisClimatico.resultadoAnalisis.compare(ResultadoAnalisisClimatico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.analisisClimatico.setResultadoAnalisis(ResultadoAnalisisClimatico.ClimaFavorable); 
+		}
+end
+
+rule "R04 - Falla Frenos Pastillas"
+    when
+        $atraccion: MontaniaRusa(
+        	frenos.espesorPastillas < 4,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.NoDeterminado)
+        )
+    then
+   		modify($atraccion){
+       		consideracion.diagnosticoElectromecanico.diagnosticoMecanico.setIntegridadFrenos(IntegridadFrenos.FallaFrenosFriccion); 
+		}	
+end
+
+
+rule "R05 - Falla Frenos imanes"
+    when
+        $atraccion: MontaniaRusa(
+    		frenos.potenciaImanes < 14200,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setIntegridadFrenos(IntegridadFrenos.FallaFrenosMagneticos); 
+		}
+end
+
