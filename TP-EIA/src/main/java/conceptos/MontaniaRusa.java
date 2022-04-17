@@ -9,10 +9,10 @@ public class MontaniaRusa {
 	private Monitoreo monitoreo;
 	private TensionElectrica tension;
 	private Freno Frenos;
-	public Diagnostico_Operatividad consideracion;
+	public DiagnosticoOperatividad consideracion;
 
 	public MontaniaRusa(Engrane engranes, Bateria bateria_plc, DepositoAceite deposito_aceite, Cinturon cinturones,
-			Monitoreo monitoreo, TensionElectrica tension, Freno frenos, Diagnostico_Operatividad consideracion) {
+			Monitoreo monitoreo, TensionElectrica tension, Freno frenos, DiagnosticoOperatividad consideracion) {
 		super();
 		this.engranes = engranes;
 		this.bateria_plc = bateria_plc;
@@ -21,7 +21,7 @@ public class MontaniaRusa {
 		this.monitoreo = monitoreo;
 		this.tension = tension;
 		Frenos = frenos;
-		this.consideraciones = consideracion;
+		this.consideracion = consideracion;
 	}
 }
 

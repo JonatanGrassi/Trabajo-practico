@@ -4,13 +4,13 @@ import atributos.AlineacionEngranes;
 import atributos.DesgasteCinturon;
 import atributos.IntegridadFrenos;
 
-public class ResultadoFinalDiagnosticoMecanico {
+public class DiagnosticoMecanico {
 	AlineacionEngranes alineacionEngranes;
 	DesgasteCinturon desgasteCinturon;
 	IntegridadFrenos integridadFrenos;
 	NivelDepositoAceite nivelDepositoAceite;
 
-	public ResultadoFinalDiagnosticoMecanico() {
+	public DiagnosticoMecanico() {
 		this.alineacionEngranes = AlineacionEngranes.NoDeterminado;
 		this.desgasteCinturon = DesgasteCinturon.NoDeterminado;
 		this.integridadFrenos = IntegridadFrenos.NoDeterminado;
