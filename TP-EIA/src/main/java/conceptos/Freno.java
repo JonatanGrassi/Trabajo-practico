@@ -1,4 +1,4 @@
-package model;
+package conceptos;
 
 public class Freno {
 	int espesorPastillas;

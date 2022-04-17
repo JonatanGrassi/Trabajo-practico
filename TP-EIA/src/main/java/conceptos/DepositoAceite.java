@@ -1,4 +1,4 @@
-package model;
+package conceptos;
 
 public class DepositoAceite {
 	static Double MIN_PORC = 0.0;

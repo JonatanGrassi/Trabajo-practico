@@ -1,6 +1,6 @@
-package model;
+package conceptos;
 
-public class Bateria {
+public class Engrane {
 	
 	static Double MIN_PORC = 0.0;
 	static Double MAX_PORC = 100.0;
@@ -22,9 +22,4 @@ public class Bateria {
 		
 		this.cargaPorcentual = cargaPorcentual;
 	}
-
-	@Override
-	public String toString() {
-		return "Bateria [cargaPorcentual=" + cargaPorcentual + "%]";
-	}	
 }

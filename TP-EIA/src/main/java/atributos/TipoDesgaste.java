@@ -1,4 +1,4 @@
-package model;
+package atributos;
 
 public enum TipoDesgaste {
 	DesgasteHebillas,

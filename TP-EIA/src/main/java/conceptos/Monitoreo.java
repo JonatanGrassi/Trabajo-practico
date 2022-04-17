@@ -1,4 +1,4 @@
-package model;
+package conceptos;
 
 public class Monitoreo {
 	Boolean OperatividadSensorParada;

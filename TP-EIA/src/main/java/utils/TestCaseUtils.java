@@ -1,12 +1,12 @@
 package utils;
 
-import model.MontaniaRusa;
-import model.Bateria;
-import model.Recomendacion;
-import model.AccionRecomendada;
-import model.ResultadoDiagnosticoPreliminar;
-import model.Motor;
-import model.TanqueCombustible;
+import conceptos.AccionRecomendada;
+import conceptos.Bateria;
+import conceptos.MontaniaRusa;
+import conceptos.Motor;
+import conceptos.Recomendacion;
+import conceptos.ResultadoDiagnosticoPreliminar;
+import conceptos.TanqueCombustible;
 
 public class TestCaseUtils {
 

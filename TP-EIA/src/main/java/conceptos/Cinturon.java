@@ -1,4 +1,6 @@
-package model;
+package conceptos;
+
+import atributos.TipoDesgaste;
 
 public class Cinturon {
 	TipoDesgaste desgaste;

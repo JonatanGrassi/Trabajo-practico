@@ -1,4 +1,4 @@
-package model;
+package conceptos;
 
 public class Clima {
 	private int intensidadPrecipitaciones;
