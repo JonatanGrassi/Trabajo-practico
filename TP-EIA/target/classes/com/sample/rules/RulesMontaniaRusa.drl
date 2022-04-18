@@ -23,6 +23,8 @@ import atributos.FuncionamientoSensores
 import atributos.OperatividadSensorParada
 import atributos.OperatividadSensoresMonitoreo
 import atributos.BateriaPLC
+import atributos.Consideraciones
+import atributos.ResultadoAnalisisClimatico
 
 //declare any global variables here
 
@@ -572,6 +574,105 @@ end
 										   
 										   	  /////******DIAGNOSTICO OPERATIVIDAD*******/////
 										   
+rule "R45 - Revisar Frenos"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.FallaEnSistemaFrenos),
+        	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.RevisarFrenos);
+		}
+end		
+
+
+rule "R46 - Alinear Engranes"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.FallaEnSistemaEngranes),
+        	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.AlinearEngranes);
+		}
+end
+
+rule "R47 - Cargar Deposito Aceite"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.InsuficienteAceitedepositos),
+        	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.CargarDepositosAceite);
+		}
+end
+
+
+rule "R48 - Revisar Sensores"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.FallaEnSistemaDeSensores),
+        	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.RevisarSensores);
+		}
+end
+
+rule "R49 - Revisar Tension"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.TensionInadecuada),
+        	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.RevisarNivelTension);
+		}
+end
+
+rule "R50 - Cargar Bateria PLC"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.CargaBateriaPLCInsuficiente),
+        	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.CargarBateriaPLC);
+		}
+end
+
+
+rule "R51 - No operativo por clima"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.analisisClimatico.resultadoAnalisis.compare(ResultadoAnalisisClimatico.ClimaFavorable),
+        	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.JuegoNoOperativoPorClima);
+		}
+end																	   
+
+rule "R52 - Operativo"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.analisisClimatico.resultadoAnalisis.compare(ResultadoAnalisisClimatico.ClimaFavorable),
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.SinFallasElectromecanicas),
+        	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.Operativo);
+		}
+end											   
 										   
 										   /////******FIN DIAGNOSTICO OPERATIVIDAD*******/////
 										   

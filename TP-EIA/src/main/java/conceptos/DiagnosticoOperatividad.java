@@ -33,10 +33,6 @@ public class DiagnosticoOperatividad {
 		this.analisisClimatico = analisisClimatico;
 	}
 
-
-	
-	
-	
 	public Consideraciones getConsideracion() {
 		return consideracion;
 	}
