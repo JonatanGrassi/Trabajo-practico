@@ -77,3 +77,15 @@ rule "R05 - Falla Frenos imanes"
 		}
 end
 
+rule "R06 - Falla Frenos imanes"
+    when
+        $atraccion: MontaniaRusa(
+    		frenos.potenciaImanes < 14200,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setIntegridadFrenos(IntegridadFrenos.FallaFrenosMagneticos); 
+		}
+end
+

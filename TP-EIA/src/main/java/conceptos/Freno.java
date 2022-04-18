@@ -1,8 +1,10 @@
 package conceptos;
 
+import atributos.EstadoCorrocion;
+
 public class Freno {
 	public int espesorPastillas;
-	public Boolean corrocion;
+	EstadoCorrocion corrocion;
 	public int potenciaImanes;
 	
 	static int MIN_ESPESOR_PASTILLAS = 2;
@@ -39,10 +41,10 @@ public class Freno {
 		return espesorPastillas;
 	}
 	
-	public Boolean getCorrocion() {
+	public EstadoCorrocion getCorrocion() {
 		return corrocion;
 	}
-	public void setCorrocion(Boolean corrocion ) {
+	public void setCorrocion(EstadoCorrocion corrocion ) {
 		this.corrocion = corrocion;
 	}
 	
