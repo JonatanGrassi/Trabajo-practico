@@ -4,7 +4,7 @@ public enum DesgasteCinturon {
 	NoDesgastado,
 	Desgastado,
 	NoDeterminado;
-	public Boolean isa(DesgasteCinturon desgaste) {
+	public Boolean compare(DesgasteCinturon desgaste) {
 		return this.toString() == desgaste.toString();
 	}
 }

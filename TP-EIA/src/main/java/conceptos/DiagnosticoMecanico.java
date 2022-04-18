@@ -3,6 +3,7 @@ package conceptos;
 import atributos.AlineacionEngranes;
 import atributos.DesgasteCinturon;
 import atributos.IntegridadFrenos;
+import atributos.NivelDepositoAceite;
 import atributos.ResultadoFinalDiagnosticoMecanico;
 
 public class DiagnosticoMecanico {

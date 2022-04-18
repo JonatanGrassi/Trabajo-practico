@@ -4,7 +4,7 @@ public enum AlineacionEngranes {
 	Alineado,
 	Desalineado,
 	NoDeterminado;
-	public Boolean isa(AlineacionEngranes alineacion) {
+	public Boolean compare(AlineacionEngranes alineacion) {
 		return this.toString() == alineacion.toString();
 	}
 }

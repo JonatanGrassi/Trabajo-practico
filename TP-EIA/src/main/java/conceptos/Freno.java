@@ -4,7 +4,7 @@ import atributos.EstadoCorrocion;
 
 public class Freno {
 	public int espesorPastillas;
-	EstadoCorrocion corrocion;
+	public EstadoCorrocion corrocion;
 	public int potenciaImanes;
 	
 	static int MIN_ESPESOR_PASTILLAS = 2;

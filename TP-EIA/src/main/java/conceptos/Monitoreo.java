@@ -1,9 +1,12 @@
 package conceptos;
 
+import atributos.OperatividadSensorParada;
+import atributos.OperatividadSensoresMonitoreo;
+
 public class Monitoreo {
-	Boolean OperatividadSensorParada;
-	Boolean OperatividadSensoresMonitoreo;
-	Double NivelCargaBateriaPLC;
+	public OperatividadSensorParada operatividadSensorParada;
+	public OperatividadSensoresMonitoreo operatividadSensoresMonitoreo;
+	public Double NivelCargaBateriaPLC;
 	
 	static Double MIN_PORC = 0.0;
 	static Double MAX_PORC = 100.0;
@@ -21,17 +24,17 @@ public class Monitoreo {
 		
 	}
 	
-	public Boolean getOperatividadSensorParada() {
-		return OperatividadSensorParada;
+	public OperatividadSensorParada getOperatividadSensorParada() {
+		return operatividadSensorParada;
 	}
-	public void setOperatividadSensorParada(Boolean operatividadSensorParada) {
-		OperatividadSensorParada = operatividadSensorParada;
+	public void setOperatividadSensorParada(OperatividadSensorParada operatividadSensorParada) {
+		this.operatividadSensorParada = operatividadSensorParada;
 	}
-	public Boolean getOperatividadSensoresMonitoreo() {
-		return OperatividadSensoresMonitoreo;
+	public OperatividadSensoresMonitoreo getOperatividadSensoresMonitoreo() {
+		return operatividadSensoresMonitoreo;
 	}
-	public void setOperatividadSensoresMonitoreo(Boolean operatividadSensoresMonitoreo) {
-		OperatividadSensoresMonitoreo = operatividadSensoresMonitoreo;
+	public void setOperatividadSensoresMonitoreo(OperatividadSensoresMonitoreo operatividadSensoresMonitoreo) {
+		this.operatividadSensoresMonitoreo = operatividadSensoresMonitoreo;
 	}
 	public Double getNivelCargaBateriaPLC() {
 		return NivelCargaBateriaPLC;

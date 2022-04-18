@@ -2,7 +2,7 @@ package atributos;
 
 public enum FuncionamientoSensores {
 	SensoresOperativos,
-	SensoresNooperativos,
+	SensoresNoOperativos,
 	NoDeterminado;
 	
 	public Boolean compare(FuncionamientoSensores sensores) {

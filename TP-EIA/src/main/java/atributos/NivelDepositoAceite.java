@@ -2,8 +2,8 @@ package atributos;
 
 public enum NivelDepositoAceite {
 	Insuficiente,
-	Suficiente;
-	
+	Suficiente,
+	NoDeterminado;
 	public  Boolean compare(NivelDepositoAceite nivel) {
 		return this.toString() == nivel.toString();
 	}

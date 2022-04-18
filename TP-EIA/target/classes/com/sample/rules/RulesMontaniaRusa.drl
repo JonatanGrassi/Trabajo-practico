@@ -13,8 +13,20 @@ import atributos.ResultadoAnalisisClimatico
 import atributos.ResultadoFinalDiagnosticoElectromecanico
 import atributos.ResultadoFinalDiagnosticoMecanico
 import atributos.IntegridadFrenos
+import atributos.EstadoCorrocion
+import atributos.AlineacionEngranes
+import atributos.NivelDepositoAceite
+import atributos.DesgasteCinturon
+import atributos.TipoDesgaste
+import atributos.NivelTension
+import atributos.FuncionamientoSensores
+import atributos.OperatividadSensorParada
+import atributos.OperatividadSensoresMonitoreo
+import atributos.BateriaPLC
 
 //declare any global variables here
+
+									  /////*******ANALISIS CLIMATICO********/////
 
 rule "R01 - Rafaga Clima Desfavorable"
     when
@@ -52,15 +64,19 @@ rule "R03 - Clima Favorable"
 		}
 end
 
+									   /////*******FIN ANALISIS CLIMATICO********/////
+									   
+										/////*******DIAGNOSTICO MECANICO********/////
+
 rule "R04 - Falla Frenos Pastillas"
     when
         $atraccion: MontaniaRusa(
-        	frenos.espesorPastillas < 4,
+        	frenos.espesorPastillas <= 4,
         	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.NoDeterminado)
         )
     then
    		modify($atraccion){
-       		consideracion.diagnosticoElectromecanico.diagnosticoMecanico.setIntegridadFrenos(IntegridadFrenos.FallaFrenosFriccion); 
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setIntegridadFrenos(IntegridadFrenos.FallaFrenosFriccion); 
 		}	
 end
 
@@ -77,15 +93,485 @@ rule "R05 - Falla Frenos imanes"
 		}
 end
 
-rule "R06 - Falla Frenos imanes"
+rule "R06 - Corrocion en frenos"
     when
         $atraccion: MontaniaRusa(
-    		frenos.potenciaImanes < 14200,
+    		frenos.corrocion.compare(EstadoCorrocion.PresentaCorrocion),
         	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.NoDeterminado)
         )
     then
     	modify($atraccion){
-       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setIntegridadFrenos(IntegridadFrenos.FallaFrenosMagneticos); 
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setIntegridadFrenos(IntegridadFrenos.FrenosDañadosCorrosion); 
 		}
 end
 
+rule "R07 - Frenos sin fallas"
+    when
+        $atraccion: MontaniaRusa(
+    		frenos.corrocion.compare(EstadoCorrocion.NoPresentaCorrocion),
+    		frenos.espesorPastillas > 4,
+    		frenos.potenciaImanes >= 14200,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setIntegridadFrenos(IntegridadFrenos.FrenosDañadosCorrosion); 
+		}
+end
+
+rule "R08 - Engranes alineados"
+    when
+        $atraccion: MontaniaRusa(
+    		Engranes.porcentajeAlineacion >= 85,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.alineacionEngranes.compare(AlineacionEngranes.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setAlineacionEngranes(AlineacionEngranes.Alineado); 
+		}
+end
+
+rule "R09 - Engranes desalineados"
+    when
+        $atraccion: MontaniaRusa(
+    		Engranes.porcentajeAlineacion < 85,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.alineacionEngranes.compare(AlineacionEngranes.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setAlineacionEngranes(AlineacionEngranes.Desalineado); 
+		}
+end
+
+rule "R10 - Aceite suficiente"
+    when
+        $atraccion: MontaniaRusa(
+    		depositoAceite.nivelAceite > 95,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.nivelDepositoAceite.compare(NivelDepositoAceite.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setNivelDepositoAceite(NivelDepositoAceite.Suficiente); 
+		}
+end
+
+rule "R11 - Aceite insuficiente"
+    when
+        $atraccion: MontaniaRusa(
+    		depositoAceite.nivelAceite <= 95,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.nivelDepositoAceite.compare(NivelDepositoAceite.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setNivelDepositoAceite(NivelDepositoAceite.Insuficiente); 
+		}
+end
+
+rule "R12 - Desgaste hebilla"
+    when
+        $atraccion: MontaniaRusa(
+    		cinturones.desgaste.compare(TipoDesgaste.DesgasteHebillas),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.desgasteCinturon.compare(DesgasteCinturon.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setDesgasteCinturon(DesgasteCinturon.Desgastado); 
+		}
+end
+
+rule "R13 - Desgaste tiras"
+    when
+        $atraccion: MontaniaRusa(
+    		cinturones.desgaste.compare(TipoDesgaste.DesgasteTiras),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.desgasteCinturon.compare(DesgasteCinturon.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setDesgasteCinturon(DesgasteCinturon.NoDesgastado); 
+		}
+end
+
+rule "R14 - Cinturon sin desgaste"
+    when
+        $atraccion: MontaniaRusa(
+    		cinturones.desgaste.compare(TipoDesgaste.BuenEstado),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.desgasteCinturon.compare(DesgasteCinturon.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setDesgasteCinturon(DesgasteCinturon.NoDesgastado); 
+		}
+end
+
+rule "R15 - Falla Engranes"
+    when
+        $atraccion: MontaniaRusa(
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.alineacionEngranes.compare(AlineacionEngranes.Desalineado),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setResultadoMecanico(ResultadoFinalDiagnosticoMecanico.FallaEngranes); 
+		}
+end
+
+rule "R16 - Falla Frenos Friccion"
+    when
+        $atraccion: MontaniaRusa(
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.FallaFrenosFriccion),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setResultadoMecanico(ResultadoFinalDiagnosticoMecanico.FallaEnFrenos); 
+		}
+end
+
+rule "R17 - Falla Frenos Magneticos"
+    when
+        $atraccion: MontaniaRusa(
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.FallaFrenosMagneticos),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setResultadoMecanico(ResultadoFinalDiagnosticoMecanico.FallaEnFrenos); 
+		}
+end
+
+rule "R18 - Falla Frenos Corrocion"
+    when
+        $atraccion: MontaniaRusa(
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.FrenosDañadosCorrosion),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setResultadoMecanico(ResultadoFinalDiagnosticoMecanico.FallaEnFrenos); 
+		}
+end
+
+rule "R19 - Falla Cinturones"
+    when
+        $atraccion: MontaniaRusa(
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.desgasteCinturon.compare(DesgasteCinturon.Desgastado),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setResultadoMecanico(ResultadoFinalDiagnosticoMecanico.FallaCinturones); 
+		}
+end
+
+rule "R20 - Deposito sin aceite"
+    when
+        $atraccion: MontaniaRusa(
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.nivelDepositoAceite.compare(NivelDepositoAceite.Insuficiente),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setResultadoMecanico(ResultadoFinalDiagnosticoMecanico.FallaCinturones); 
+		}
+end
+
+rule "R21 - Sin Fallas Mecanicas"
+    when
+        $atraccion: MontaniaRusa(
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.nivelDepositoAceite.compare(NivelDepositoAceite.Suficiente),
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.desgasteCinturon.compare(DesgasteCinturon.NoDesgastado),
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.PerfectoEstado),
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.alineacionEngranes.compare(AlineacionEngranes.Alineado),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setResultadoMecanico(ResultadoFinalDiagnosticoMecanico.FallaCinturones); 
+		}
+end
+
+										   /////*******FIN DIAGNOSTICO MECANICO********/////
+											
+											/////*******DIAGNOSTICO ELECTRICO********/////
+
+rule "R22 - Deposito sin aceite"
+    when
+        $atraccion: MontaniaRusa(
+    		tension.nivelDeVoltaje <= 580,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.nivelDeTension.compare(NivelTension.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setNivelDeTension(NivelTension.BajaTension); 
+		}
+end
+
+rule "R23 - Baja tension"
+    when
+        $atraccion: MontaniaRusa(
+    		tension.nivelDeVoltaje <= 580,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.nivelDeTension.compare(NivelTension.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setNivelDeTension(NivelTension.BajaTension); 
+		}
+end
+
+rule "R24 - Alta tension"
+    when
+        $atraccion: MontaniaRusa(
+    		tension.nivelDeVoltaje > 690,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.nivelDeTension.compare(NivelTension.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setNivelDeTension(NivelTension.AltaTension); 
+		}
+end
+
+rule "R25 - Correcta tension"
+    when
+        $atraccion: MontaniaRusa(
+    		tension.nivelDeVoltaje > 580,
+    		tension.nivelDeVoltaje <= 690,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.nivelDeTension.compare(NivelTension.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setNivelDeTension(NivelTension.CorrectaTension); 
+		}
+end
+
+rule "R26 - Sensor parada no operativo"
+    when
+        $atraccion: MontaniaRusa(
+    		monitoreo.operatividadSensorParada.compare(OperatividadSensorParada.NoOperativo),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.sensores.compare(FuncionamientoSensores.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setSensores(FuncionamientoSensores.SensoresNoOperativos); 
+		}
+end
+
+rule "R27 - Sensores monitoreo no operativo"
+   when
+        $atraccion: MontaniaRusa(
+    		monitoreo.operatividadSensoresMonitoreo.compare(OperatividadSensoresMonitoreo.NoOperativo),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.sensores.compare(FuncionamientoSensores.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setSensores(FuncionamientoSensores.SensoresNoOperativos); 
+		}
+end
+
+rule "R28 - Sensores monitoreo no operativo"
+   when
+        $atraccion: MontaniaRusa(
+    		monitoreo.operatividadSensoresMonitoreo.compare(OperatividadSensoresMonitoreo.Operativo),
+    		monitoreo.operatividadSensorParada.compare(OperatividadSensorParada.Operativo),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.sensores.compare(FuncionamientoSensores.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setSensores(FuncionamientoSensores.SensoresOperativos); 
+		}
+end
+
+rule "R29 - Nivel carga bateria PLC suficiente"
+   when
+        $atraccion: MontaniaRusa(
+    		monitoreo.NivelCargaBateriaPLC > 80,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.bateriaPLC.compare(BateriaPLC.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setBateriaPLC(BateriaPLC.Suficiente); 
+		}
+end
+
+rule "R30 - Nivel carga bateria PLC insuficiente"
+   when
+        $atraccion: MontaniaRusa(
+    		monitoreo.NivelCargaBateriaPLC <= 80,
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.bateriaPLC.compare(BateriaPLC.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setBateriaPLC(BateriaPLC.Insuficiente); 
+		}
+end
+
+rule "R31 - Problemas Tension Baja"
+   when
+       $atraccion: MontaniaRusa(
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.nivelDeTension.compare(NivelTension.BajaTension),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.resultadoElectrico.compare(ResultadoFinalDiagnosticoElectrico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setResultadoElectrico(ResultadoFinalDiagnosticoElectrico.ProblemasTension); 
+		}
+end
+
+rule "R32 - Problemas Tension Alta"
+   when
+       $atraccion: MontaniaRusa(
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.nivelDeTension.compare(NivelTension.AltaTension),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.resultadoElectrico.compare(ResultadoFinalDiagnosticoElectrico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setResultadoElectrico(ResultadoFinalDiagnosticoElectrico.ProblemasTension); 
+		}
+end
+
+rule "R33 - Problemas Sensores"
+   when
+       $atraccion: MontaniaRusa(
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.sensores.compare(FuncionamientoSensores.SensoresNoOperativos),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.resultadoElectrico.compare(ResultadoFinalDiagnosticoElectrico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setResultadoElectrico(ResultadoFinalDiagnosticoElectrico.ProblemasEnsensores); 
+		}
+end
+
+rule "R34 - Bateria Insuficiente PLC"
+   when
+       $atraccion: MontaniaRusa(
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.bateriaPLC.compare(BateriaPLC.Insuficiente),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.resultadoElectrico.compare(ResultadoFinalDiagnosticoElectrico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setResultadoElectrico(ResultadoFinalDiagnosticoElectrico.PLCsinSuficienteCarga); 
+		}
+end
+
+rule "R35 - Sin Fallas Electricas"
+   when
+       $atraccion: MontaniaRusa(
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.bateriaPLC.compare(BateriaPLC.Suficiente),
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.sensores.compare(FuncionamientoSensores.SensoresOperativos),
+    		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.nivelDeTension.compare(NivelTension.CorrectaTension),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.resultadoElectrico.compare(ResultadoFinalDiagnosticoElectrico.NoDeterminado)
+        )
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setResultadoElectrico(ResultadoFinalDiagnosticoElectrico.SinFallasElectricas); 
+		}
+end
+
+										   /////*******FIN DIAGNOSTICO ELECTRICO********/////
+										   
+										   
+										   /////******DIAGNOSTICO ELECTROMECANICO*******/////
+										   
+rule "R36 - Falla En Sistema Frenos"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.FallaEnFrenos),
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.NoDeterminado)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.setResultadoElectromecanico(ResultadoFinalDiagnosticoElectromecanico.FallaEnSistemaFrenos);
+		}
+end
+
+rule "R37 - Insuficiente Aciete Depositos"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.TanqueSinSuficienteAceite),
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.NoDeterminado)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.setResultadoElectromecanico(ResultadoFinalDiagnosticoElectromecanico.InsuficienteAceitedepositos);
+		}
+end
+
+rule "R38 - Problemas Cinturones Seguridad"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.FallaCinturones),
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.NoDeterminado)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.setResultadoElectromecanico(ResultadoFinalDiagnosticoElectromecanico.ProblemaEnCinturonesSeguridad);
+		}
+end
+
+rule "R39 - Falla Sistemas Engranes"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.FallaEngranes),
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.NoDeterminado)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.setResultadoElectromecanico(ResultadoFinalDiagnosticoElectromecanico.FallaEnSistemaEngranes);
+		}
+end
+
+rule "R39 - Tension inadecuada"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.resultadoElectrico.compare(ResultadoFinalDiagnosticoElectrico.ProblemasTension),
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.NoDeterminado)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.setResultadoElectromecanico(ResultadoFinalDiagnosticoElectromecanico.TensionInadecuada);
+		}
+end
+
+rule "R40 - Falla en sistema de sensores"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.resultadoElectrico.compare(ResultadoFinalDiagnosticoElectrico.ProblemasEnsensores),
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.NoDeterminado)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.setResultadoElectromecanico(ResultadoFinalDiagnosticoElectromecanico.FallaEnSistemaDeSensores);
+		}
+end
+
+rule "R41 - Carga PLC Bateria insuficiente"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.resultadoElectrico.compare(ResultadoFinalDiagnosticoElectrico.PLCsinSuficienteCarga),
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.NoDeterminado)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.setResultadoElectromecanico(ResultadoFinalDiagnosticoElectromecanico.CargaBateriaPLCInsuficiente);
+		}
+end
+
+rule "R42 - Sin Fallas Electromecanicas"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.resultadoElectrico.compare(ResultadoFinalDiagnosticoElectrico.SinFallasElectricas),
+        	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.SinFallasMecanicas),
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.NoDeterminado)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.diagnosticoElectromecanico.setResultadoElectromecanico(ResultadoFinalDiagnosticoElectromecanico.SinFallasElectromecanicas);
+		}
+end																				   								   
+										   
+										   /////******FIN DIAGNOSTICO ELECTROMECANICO*******/////
+										   
+										   	  /////******DIAGNOSTICO OPERATIVIDAD*******/////
+										   
+										   
+										   /////******FIN DIAGNOSTICO OPERATIVIDAD*******/////
+										   

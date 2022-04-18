@@ -5,7 +5,7 @@ import atributos.ResultadoAnalisisClimatico;
 public class AnalisisClimatico {
 	ResultadoAnalisisClimatico resultadoAnalisis;
 	
-	public AnalisisClimatico(ResultadoAnalisisClimatico resultadoAnalisis) {
+	public AnalisisClimatico() {
 		this.resultadoAnalisis = ResultadoAnalisisClimatico.NoDeterminado;
 	}
 	

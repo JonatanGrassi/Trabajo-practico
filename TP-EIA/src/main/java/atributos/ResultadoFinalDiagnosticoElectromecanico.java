@@ -9,7 +9,7 @@ public enum ResultadoFinalDiagnosticoElectromecanico {
 	FallaEnSistemaDeSensores,
 	CargaBateriaPLCInsuficiente,
 	SinFallasElectromecanicas,
-	Nodeterminado;
+	NoDeterminado;
 	
 	public  Boolean compare(ResultadoFinalDiagnosticoElectromecanico resultado) {
 		return this.toString() == resultado.toString();

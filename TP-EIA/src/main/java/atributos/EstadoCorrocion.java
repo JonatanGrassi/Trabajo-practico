@@ -2,10 +2,10 @@ package atributos;
 
 public enum EstadoCorrocion {
 	PresentaCorrocion,
-	noPresentaCorrocion,
+	NoPresentaCorrocion,
 	NoDeterminado;
 	
-	public Boolean compare(IntegridadFrenos integridad) {
+	public Boolean compare(EstadoCorrocion integridad) {
 		return this.toString() == integridad.toString();
 	}
 	

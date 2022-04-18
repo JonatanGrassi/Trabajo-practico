@@ -3,11 +3,7 @@ package conceptos;
 import atributos.TipoDesgaste;
 
 public class Cinturon {
-	TipoDesgaste desgaste;
-
-	public Cinturon(TipoDesgaste desgaste) {
-		this.desgaste = desgaste;
-	}
+	public TipoDesgaste desgaste;
 
 	public TipoDesgaste getDesgaste() {
 		return desgaste;

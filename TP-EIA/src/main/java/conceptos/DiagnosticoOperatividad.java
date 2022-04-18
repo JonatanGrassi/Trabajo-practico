@@ -8,6 +8,12 @@ public class DiagnosticoOperatividad {
 	public AnalisisClimatico analisisClimatico;
 	public Consideraciones consideracion;
 	
+	public DiagnosticoOperatividad() {
+		diagnosticoElectromecanico = new DiagnosticoElectromecanico();
+		analisisClimatico = new AnalisisClimatico();
+		consideracion = Consideraciones.NoDeterminada;
+	} 
+	
 	public DiagnosticoElectromecanico getDiagnosticoElectromecanico() {
 		return diagnosticoElectromecanico;
 	}
@@ -28,10 +34,7 @@ public class DiagnosticoOperatividad {
 	}
 
 
-	public DiagnosticoOperatividad() {
-		diagnosticoElectromecanico = new DiagnosticoElectromecanico();
-		consideracion = Consideraciones.NoDeterminada;
-	} 
+	
 	
 	
 	public Consideraciones getConsideracion() {

@@ -3,9 +3,10 @@ package atributos;
 public enum TipoDesgaste {
 	DesgasteHebillas,
 	DesgasteTiras,
+	BuenEstado,
 	Nodeterminado;
 	
-	public  Boolean isa(TipoDesgaste tipoDesgas) {
+	public  Boolean compare(TipoDesgaste tipoDesgas) {
 		return this.toString() == tipoDesgas.toString();
 	}
 }

@@ -6,10 +6,10 @@ import atributos.NivelTension;
 import atributos.ResultadoFinalDiagnosticoElectrico;
 
 public class DiagnosticoElectrico {
-	NivelTension nivelDeTension;
-	FuncionamientoSensores sensores;
-	BateriaPLC bateriaPLC;
-	ResultadoFinalDiagnosticoElectrico resultadoElectrico;
+	public NivelTension nivelDeTension;
+	public FuncionamientoSensores sensores;
+	public BateriaPLC bateriaPLC;
+	public ResultadoFinalDiagnosticoElectrico resultadoElectrico;
 	
 	public DiagnosticoElectrico() {
 		this.nivelDeTension = NivelTension.NoDeterminado;
