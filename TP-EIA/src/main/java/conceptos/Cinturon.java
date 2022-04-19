@@ -12,5 +12,10 @@ public class Cinturon {
 	public void setDesgaste(TipoDesgaste desgaste) {
 		this.desgaste = desgaste;
 	}
+
+	@Override
+	public String toString() {
+		return "Cinturon [desgaste=" + desgaste + "]";
+	}
 	
 }

@@ -17,4 +17,11 @@ public class TensionElectrica {
 		}
 		this.nivelDeVoltaje = nivelDeVoltaje;
 	}
+
+	@Override
+	public String toString() {
+		return "TensionElectrica [nivelDeVoltaje=" + nivelDeVoltaje + "]";
+	}
+	
+	
 }

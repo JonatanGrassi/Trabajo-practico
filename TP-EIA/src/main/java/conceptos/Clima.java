@@ -1,13 +1,14 @@
 package conceptos;
 
 public class Clima {
+	@Override
+	public String toString() {
+		return "Clima [intensidadPrecipitaciones=" + intensidadPrecipitaciones + ", intensidadRafagas="
+				+ intensidadRafagas + "]";
+	}
+
 	public int intensidadPrecipitaciones;
 	public int intensidadRafagas;
-	
-	public Clima(int intensidadPrecipitaciones, int intensidadRafagas) {
-		this.intensidadPrecipitaciones = intensidadPrecipitaciones;
-		this.intensidadRafagas = intensidadRafagas;
-	}
 
 	public int getIntensidadPrecipitaciones() {
 		return intensidadPrecipitaciones;

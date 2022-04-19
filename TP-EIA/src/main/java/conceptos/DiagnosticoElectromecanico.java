@@ -3,6 +3,12 @@ package conceptos;
 import atributos.ResultadoFinalDiagnosticoElectromecanico;
 
 public class DiagnosticoElectromecanico {
+	@Override
+	public String toString() {
+		return "DiagnosticoElectromecanico [diagnosticoMecanico=" + diagnosticoMecanico + ", diagnosticoElectrico="
+				+ diagnosticoElectrico + ", resultadoElectromecanico=" + resultadoElectromecanico + "]";
+	}
+
 	public DiagnosticoMecanico diagnosticoMecanico;
 	public DiagnosticoElectrico diagnosticoElectrico;
 	public ResultadoFinalDiagnosticoElectromecanico resultadoElectromecanico;

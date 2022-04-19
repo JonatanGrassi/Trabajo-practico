@@ -6,6 +6,12 @@ import atributos.NivelTension;
 import atributos.ResultadoFinalDiagnosticoElectrico;
 
 public class DiagnosticoElectrico {
+	@Override
+	public String toString() {
+		return "DiagnosticoElectrico [nivelDeTension=" + nivelDeTension + ", sensores=" + sensores + ", bateriaPLC="
+				+ bateriaPLC + ", resultadoElectrico=" + resultadoElectrico + "]";
+	}
+
 	public NivelTension nivelDeTension;
 	public FuncionamientoSensores sensores;
 	public BateriaPLC bateriaPLC;

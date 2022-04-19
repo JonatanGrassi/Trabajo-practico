@@ -581,9 +581,9 @@ rule "R45 - Revisar Frenos"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	modify($atraccion){
-       		resultadoFinal.setConsideracion(Consideraciones.RevisarFrenos);
-		}
+    	//modify($atraccion){
+       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.RevisarFrenos);
+		//}
 end		
 
 
@@ -594,9 +594,9 @@ rule "R46 - Alinear Engranes"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	modify($atraccion){
-       		resultadoFinal.setConsideracion(Consideraciones.AlinearEngranes);
-		}
+    	//modify($atraccion){
+       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.AlinearEngranes);
+		//}
 end
 
 rule "R47 - Cargar Deposito Aceite"
@@ -606,9 +606,9 @@ rule "R47 - Cargar Deposito Aceite"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	modify($atraccion){
-       		resultadoFinal.setConsideracion(Consideraciones.CargarDepositosAceite);
-		}
+    	//modify($atraccion){
+       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.CargarDepositosAceite);
+		//}
 end
 
 
@@ -619,9 +619,9 @@ rule "R48 - Revisar Sensores"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	modify($atraccion){
-       		resultadoFinal.setConsideracion(Consideraciones.RevisarSensores);
-		}
+    	//modify($atraccion){
+       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.RevisarSensores);
+		//}
 end
 
 rule "R49 - Revisar Tension"
@@ -631,9 +631,9 @@ rule "R49 - Revisar Tension"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	modify($atraccion){
-       		resultadoFinal.setConsideracion(Consideraciones.RevisarNivelTension);
-		}
+    	//modify($atraccion){
+       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.RevisarNivelTension);
+		//}
 end
 
 rule "R50 - Cargar Bateria PLC"
@@ -643,9 +643,9 @@ rule "R50 - Cargar Bateria PLC"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	modify($atraccion){
-       		resultadoFinal.setConsideracion(Consideraciones.CargarBateriaPLC);
-		}
+    	//modify($atraccion){
+       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.CargarBateriaPLC);
+		//}
 end
 
 
@@ -656,9 +656,9 @@ rule "R51 - No operativo por clima"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	modify($atraccion){
-       		resultadoFinal.setConsideracion(Consideraciones.JuegoNoOperativoPorClima);
-		}
+    	//modify($atraccion){
+       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.JuegoNoOperativoPorClima);
+		//}
 end																	   
 
 rule "R52 - Operativo"
@@ -669,9 +669,9 @@ rule "R52 - Operativo"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	modify($atraccion){
-       		resultadoFinal.setConsideracion(Consideraciones.Operativo);
-		}
+    	//modify($atraccion){
+       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.Operativo);
+		//}
 end											   
 										   
 										   /////******FIN DIAGNOSTICO OPERATIVIDAD*******/////

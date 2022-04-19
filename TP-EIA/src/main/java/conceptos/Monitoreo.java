@@ -6,21 +6,21 @@ import atributos.OperatividadSensoresMonitoreo;
 public class Monitoreo {
 	public OperatividadSensorParada operatividadSensorParada;
 	public OperatividadSensoresMonitoreo operatividadSensoresMonitoreo;
-	public Double NivelCargaBateriaPLC;
+	public Double nivelCargaBateriaPLC;
 	
 	static Double MIN_PORC = 0.0;
 	static Double MAX_PORC = 100.0;
 	
 	public void setNivelCargaBateriaPLC(Double nivelCargaBateriaPLC) {
 		
-		if (NivelCargaBateriaPLC > MAX_PORC) {
+		if (nivelCargaBateriaPLC > MAX_PORC) {
 			throw new IllegalArgumentException("NivelCargaBateriaPLC: maximo valor permitido " + MAX_PORC + " %.");
 		}
 		
-		if (NivelCargaBateriaPLC < MIN_PORC) {
+		if (nivelCargaBateriaPLC < MIN_PORC) {
 			throw new IllegalArgumentException("NivelCargaBateriaPLC no puede ser negativo");
 		}
-		this.NivelCargaBateriaPLC = nivelCargaBateriaPLC;
+		this.nivelCargaBateriaPLC = nivelCargaBateriaPLC;
 		
 	}
 	
@@ -37,12 +37,12 @@ public class Monitoreo {
 		this.operatividadSensoresMonitoreo = operatividadSensoresMonitoreo;
 	}
 	public Double getNivelCargaBateriaPLC() {
-		return NivelCargaBateriaPLC;
+		return nivelCargaBateriaPLC;
 	}
 
-	
-
-	
-
-
+	@Override
+	public String toString() {
+		return "Monitoreo [operatividadSensorParada=" + operatividadSensorParada + ", operatividadSensoresMonitoreo="
+				+ operatividadSensoresMonitoreo + ", nivelCargaBateriaPLC=" + nivelCargaBateriaPLC + "]";
+	}
 }

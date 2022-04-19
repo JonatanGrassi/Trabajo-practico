@@ -51,5 +51,11 @@ public class Freno {
 	public int getPotenciaImanes() {
 		return potenciaImanes;
 	}
+
+	@Override
+	public String toString() {
+		return "Freno [espesorPastillas=" + espesorPastillas + ", corrocion=" + corrocion + ", potenciaImanes="
+				+ potenciaImanes + "]";
+	}
 	
 }

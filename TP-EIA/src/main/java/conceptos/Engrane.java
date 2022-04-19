@@ -22,4 +22,11 @@ public class Engrane {
 		
 		this.porcentajeAlineacion = porcentajeAlineacion;
 	}
+
+	@Override
+	public String toString() {
+		return "Engrane [porcentajeAlineacion=" + porcentajeAlineacion + "]";
+	}
+	
+	
 }

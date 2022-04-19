@@ -41,4 +41,12 @@ public class DiagnosticoOperatividad {
 	public void setConsideracion(Consideraciones consideracion) {
 		this.consideracion = consideracion;
 	}
+
+	@Override
+	public String toString() {
+		return "DiagnosticoOperatividad [diagnosticoElectromecanico=" + diagnosticoElectromecanico
+				+ ", analisisClimatico=" + analisisClimatico + ", consideracion=" + consideracion + "]";
+	}
+	
+	
 }

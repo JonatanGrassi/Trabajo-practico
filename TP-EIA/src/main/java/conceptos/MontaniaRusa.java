@@ -3,7 +3,6 @@ package conceptos;
 public class MontaniaRusa {
 
 	public Engrane engranes;
-	public Bateria bateriaPLC;
 	public DepositoAceite depositoAceite;
 	public Cinturon cinturones;
 	public Monitoreo monitoreo;
@@ -12,10 +11,9 @@ public class MontaniaRusa {
 	public DiagnosticoOperatividad resultadoFinal;
 	public Clima clima;
 
-	public MontaniaRusa(Engrane engranes, Bateria bateria_plc, DepositoAceite deposito_aceite, Cinturon cinturones,
+	public MontaniaRusa(Engrane engranes, DepositoAceite deposito_aceite, Cinturon cinturones,
 			Monitoreo monitoreo, TensionElectrica tension, Freno frenos,Clima clima) {
 		this.engranes = engranes;
-		this.bateriaPLC = bateria_plc;
 		this.depositoAceite = deposito_aceite;
 		this.cinturones = cinturones;
 		this.monitoreo = monitoreo;
@@ -33,13 +31,6 @@ public class MontaniaRusa {
 		this.engranes = engranes;
 	}
 
-	public Bateria getBateria_plc() {
-		return bateriaPLC;
-	}
-
-	public void setBateria_plc(Bateria bateria_plc) {
-		this.bateriaPLC = bateria_plc;
-	}
 
 	public DepositoAceite getDeposito_aceite() {
 		return depositoAceite;
@@ -91,6 +82,13 @@ public class MontaniaRusa {
 
 	public Clima getClima() {
 		return clima;
+	}
+
+	@Override
+	public String toString() {
+		return "MontaniaRusa [engranes=" + engranes + ", depositoAceite=" + depositoAceite + ", cinturones="
+				+ cinturones + ", monitoreo=" + monitoreo + ", tension=" + tension + ", Frenos=" + Frenos
+				+ ", resultadoFinal=" + resultadoFinal + ", clima=" + clima + "]";
 	}
 
 	public void setClima(Clima clima) {

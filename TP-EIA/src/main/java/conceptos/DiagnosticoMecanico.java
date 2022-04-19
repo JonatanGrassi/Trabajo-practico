@@ -7,6 +7,13 @@ import atributos.NivelDepositoAceite;
 import atributos.ResultadoFinalDiagnosticoMecanico;
 
 public class DiagnosticoMecanico {
+	@Override
+	public String toString() {
+		return "DiagnosticoMecanico [alineacionEngranes=" + alineacionEngranes + ", desgasteCinturon="
+				+ desgasteCinturon + ", integridadFrenos=" + integridadFrenos + ", nivelDepositoAceite="
+				+ nivelDepositoAceite + ", resultadoMecanico=" + resultadoMecanico + "]";
+	}
+
 	public AlineacionEngranes alineacionEngranes;
 	public DesgasteCinturon desgasteCinturon;
 	public IntegridadFrenos integridadFrenos;

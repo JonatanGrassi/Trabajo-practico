@@ -21,4 +21,11 @@ public class DepositoAceite {
 		
 		this.nivelAceite = nivelAceite;
 	}
+
+	@Override
+	public String toString() {
+		return "DepositoAceite [nivelAceite=" + nivelAceite + "]";
+	}
+	
+	
 }

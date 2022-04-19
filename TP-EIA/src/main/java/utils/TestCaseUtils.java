@@ -1,12 +1,6 @@
 package utils;
 
-import conceptos.AccionRecomendada;
-import conceptos.Bateria;
 import conceptos.MontaniaRusa;
-import conceptos.Motor;
-import conceptos.DiagnosticoOperatividad;
-import conceptos.ResultadoDiagnosticoPreliminar;
-import conceptos.TanqueCombustible;
 
 public class TestCaseUtils {
 
@@ -19,9 +13,10 @@ public class TestCaseUtils {
 	public static void print() {
 		print("");
 	}
-
+	
+	/*
 	public static void print(MontaniaRusa automovil) {
-
+		
 		Motor motor = automovil.getMotor();
 		Bateria bateria = automovil.getBateria();
 		TanqueCombustible tanque = automovil.getTanque();
@@ -32,6 +27,7 @@ public class TestCaseUtils {
 		print("Bateria: " + bateria);
 		print("Tanque: " + tanque);
 		print();
+		
 	}
 
 	public static void assertResults(DiagnosticoOperatividad recomendacion, AccionRecomendada valorEsperado) {
@@ -48,4 +44,5 @@ public class TestCaseUtils {
 		String condition = isOk ? "Ok" : "Fallo";
 		print("Caso de prueba: "+ condition);
 	}
+	*/
 }
