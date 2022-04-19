@@ -2,12 +2,10 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.drools.core.RuleBaseConfiguration.AssertBehaviour;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -15,7 +13,6 @@ import org.kie.api.runtime.rule.FactHandle;
 
 import atributos.Consideraciones;
 import atributos.EstadoCorrocion;
-import atributos.FuncionamientoSensores;
 import atributos.OperatividadSensorParada;
 import atributos.OperatividadSensoresMonitoreo;
 import atributos.TipoDesgaste;
@@ -29,38 +26,36 @@ import conceptos.Monitoreo;
 import conceptos.MontaniaRusa;
 import conceptos.TensionElectrica;
 import utils.KnowledgeSessionHelper;
+import utils.TestCaseUtils;
 
 class Tests {
 
 	String K_SESSION_NAME = "montaniaRusa-session";
-	static KieContainer kieContainer; 
-	KieSession sessionStatefull;
-	//static KieContainer kieContainer = KnowledgeSessionHelper.createRuleBase();
-	//KieSession sessionStatefull = KnowledgeSessionHelper.getStatefulKnowledgeSessionWithCallback(kieContainer, K_SESSION_NAME);
+	//static KieContainer kieContainer; 
+	//KieSession sessionStatefull;
+	static KieContainer kieContainer = KnowledgeSessionHelper.createRuleBase();
+	KieSession sessionStatefull = KnowledgeSessionHelper.getStatefulKnowledgeSessionWithCallback(kieContainer, K_SESSION_NAME);
 	
 	FactHandle automovilDir;
 	
 	public Tests() {
 	}
-	
-	/*
+
 	@BeforeClass
 	public static void beforeallTestSetup() {
 		kieContainer = KnowledgeSessionHelper.createRuleBase();
 	}
+	private void prepareKnowledgeSession() {
+		sessionStatefull = KnowledgeSessionHelper.getStatefulKnowledgeSessionWithCallback(kieContainer, K_SESSION_NAME);
+	}
 	
-	//@BeforeClass
-	//private void prepareKnowledgeSession() {
-	//	sessionStatefull = KnowledgeSessionHelper.getStatefulKnowledgeSessionWithCallback(kieContainer, K_SESSION_NAME);
-	//}
-	/*
 	@Before
 	public void setUp() {
 		System.out.println("----------Start----------");
 		System.out.println();
 		this.prepareKnowledgeSession(); // Inicializa una nueva base de hechos
 	}
-	*/
+	
 	
 	@After
 	public void tearDown() {
@@ -71,8 +66,6 @@ class Tests {
 	
 	@Test
 	public void cargarBateriaPLCTest() {
-		kieContainer = KnowledgeSessionHelper.createRuleBase();
-		KieSession sessionStatefull = KnowledgeSessionHelper.getStatefulKnowledgeSessionWithCallback(kieContainer, K_SESSION_NAME);
 		
 		Monitoreo monitoreo = new Monitoreo();
 		monitoreo.setNivelCargaBateriaPLC(50.0);
@@ -103,7 +96,7 @@ class Tests {
 		
 		MontaniaRusa atraccion = new MontaniaRusa(engranes,depAceite, cinturones, monitoreo, tension, frenos, clima);
 		
-		System.out.println(atraccion);
+		TestCaseUtils.verAtraccion(atraccion);
 		sessionStatefull.insert(atraccion);
 		sessionStatefull.fireAllRules();
 

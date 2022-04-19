@@ -25,6 +25,7 @@ import atributos.OperatividadSensoresMonitoreo
 import atributos.BateriaPLC
 import atributos.Consideraciones
 import atributos.ResultadoAnalisisClimatico
+import utils.TestCaseUtils
 
 //declare any global variables here
 
@@ -37,8 +38,9 @@ rule "R01 - Rafaga Clima Desfavorable"
         )
     then 
     	modify($atraccion){
-       		resultadoFinal.analisisClimatico.setResultadoAnalisis(ResultadoAnalisisClimatico.ClimaDesfavorable);
-		}
+       		resultadoFinal.analisisClimatico.setResultadoAnalisis(ResultadoAnalisisClimatico.ClimaDesfavorable),
+       		debugValue("R01");
+		}  	
 end
 
 rule "R02 - Precipitaciones Clima Desfavorable"

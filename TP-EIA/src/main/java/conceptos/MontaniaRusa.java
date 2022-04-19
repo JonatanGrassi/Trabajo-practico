@@ -83,13 +83,11 @@ public class MontaniaRusa {
 	public Clima getClima() {
 		return clima;
 	}
-
-	@Override
-	public String toString() {
-		return "MontaniaRusa [engranes=" + engranes + ", depositoAceite=" + depositoAceite + ", cinturones="
-				+ cinturones + ", monitoreo=" + monitoreo + ", tension=" + tension + ", Frenos=" + Frenos
-				+ ", resultadoFinal=" + resultadoFinal + ", clima=" + clima + "]";
-	}
+	
+	public static void debugValue(String regla) {
+        System.out.println("regla: " + regla);
+		return;
+    }
 
 	public void setClima(Clima clima) {
 		this.clima = clima;
