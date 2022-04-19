@@ -1,47 +1,47 @@
 //created on: 15/04/2022
-package RulesMontaniaRusa
+package rulesMontaniaRusa
 
 //list any import classes here.
-import conceptos.MontaniaRusa
-import conceptos.Clima
-import conceptos.DiagnosticoOperatividad
-import conceptos.DiagnosticoElectromecanico
-import conceptos.DiagnosticoMecanico
-import conceptos.DiagnosticoElectrico
-import atributos.ResultadoFinalDiagnosticoElectrico
-import atributos.ResultadoAnalisisClimatico
-import atributos.ResultadoFinalDiagnosticoElectromecanico
-import atributos.ResultadoFinalDiagnosticoMecanico
-import atributos.IntegridadFrenos
-import atributos.EstadoCorrocion
-import atributos.AlineacionEngranes
-import atributos.NivelDepositoAceite
-import atributos.DesgasteCinturon
-import atributos.TipoDesgaste
-import atributos.NivelTension
-import atributos.FuncionamientoSensores
-import atributos.OperatividadSensorParada
-import atributos.OperatividadSensoresMonitoreo
-import atributos.BateriaPLC
-import atributos.Consideraciones
-import atributos.ResultadoAnalisisClimatico
-import utils.TestCaseUtils
+import conceptos.MontaniaRusa;
+import conceptos.Clima;
+import conceptos.DiagnosticoOperatividad;
+import conceptos.DiagnosticoElectromecanico;
+import conceptos.DiagnosticoMecanico;
+import conceptos.DiagnosticoElectrico;
+import atributos.ResultadoFinalDiagnosticoElectrico;
+import atributos.ResultadoAnalisisClimatico;
+import atributos.ResultadoFinalDiagnosticoElectromecanico;
+import atributos.ResultadoFinalDiagnosticoMecanico;
+import atributos.IntegridadFrenos;
+import atributos.EstadoCorrocion;
+import atributos.AlineacionEngranes;
+import atributos.NivelDepositoAceite;
+import atributos.DesgasteCinturon;
+import atributos.TipoDesgaste;
+import atributos.NivelTension;
+import atributos.FuncionamientoSensores;
+import atributos.OperatividadSensorParada;
+import atributos.OperatividadSensoresMonitoreo;
+import atributos.BateriaPLC;
+import atributos.Consideraciones;
+import atributos.ResultadoAnalisisClimatico;
+import utils.TestCaseUtils;
 
 //declare any global variables here
 
-									  /////*******ANALISIS CLIMATICO********/////
 
 rule "R01 - Rafaga Clima Desfavorable"
     when
-        $atraccion: MontaniaRusa(clima.intensidadRafagas > 70,
-        	resultadoFinal.analisisClimatico.resultadoAnalisis.compare(ResultadoAnalisisClimatico.NoDeterminado) 
+        $atraccion: MontaniaRusa(
+        clima.intensidadRafagas > 70,
+        resultadoFinal.analisisClimatico.resultadoAnalisis.compare(ResultadoAnalisisClimatico.NoDeterminado) 
         )
     then 
     	modify($atraccion){
-       		resultadoFinal.analisisClimatico.setResultadoAnalisis(ResultadoAnalisisClimatico.ClimaDesfavorable),
-       		debugValue("R01");
+       		resultadoFinal.analisisClimatico.setResultadoAnalisis(ResultadoAnalisisClimatico.ClimaDesfavorable);
 		}  	
 end
+
 
 rule "R02 - Precipitaciones Clima Desfavorable"
     when
@@ -68,9 +68,6 @@ rule "R03 - Clima Favorable"
 		}
 end
 
-									   /////*******FIN ANALISIS CLIMATICO********/////
-									   
-										/////*******DIAGNOSTICO MECANICO********/////
 
 rule "R04 - Falla Frenos Pastillas"
     when
@@ -119,7 +116,7 @@ rule "R07 - Frenos sin fallas"
         )
     then
     	modify($atraccion){
-       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setIntegridadFrenos(IntegridadFrenos.FrenosDañadosCorrosion); 
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setIntegridadFrenos(IntegridadFrenos.PerfectoEstado); 
 		}
 end
 
@@ -275,7 +272,7 @@ rule "R20 - Deposito sin aceite"
         )
     then
     	modify($atraccion){
-       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setResultadoMecanico(ResultadoFinalDiagnosticoMecanico.FallaCinturones); 
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setResultadoMecanico(ResultadoFinalDiagnosticoMecanico.TanqueSinSuficienteAceite); 
 		}
 end
 
@@ -290,18 +287,15 @@ rule "R21 - Sin Fallas Mecanicas"
         )
     then
     	modify($atraccion){
-       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setResultadoMecanico(ResultadoFinalDiagnosticoMecanico.FallaCinturones); 
+       		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.setResultadoMecanico(ResultadoFinalDiagnosticoMecanico.SinFallasMecanicas); 
 		}
 end
 
-										   /////*******FIN DIAGNOSTICO MECANICO********/////
-											
-											/////*******DIAGNOSTICO ELECTRICO********/////
-
+/*
 rule "R22 - Deposito sin aceite"
     when
         $atraccion: MontaniaRusa(
-    		tension.nivelDeVoltaje <= 580,
+    		depositoAceite.nivelAceite <= 90,
         	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.nivelDeTension.compare(NivelTension.NoDeterminado)
         )
     then
@@ -309,6 +303,7 @@ rule "R22 - Deposito sin aceite"
        		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setNivelDeTension(NivelTension.BajaTension); 
 		}
 end
+*/
 
 rule "R23 - Baja tension"
     when
@@ -371,7 +366,7 @@ rule "R27 - Sensores monitoreo no operativo"
 		}
 end
 
-rule "R28 - Sensores monitoreo no operativo"
+rule "R28 - Funcionamiento Sensores operativos"
    when
         $atraccion: MontaniaRusa(
     		monitoreo.operatividadSensoresMonitoreo.compare(OperatividadSensoresMonitoreo.Operativo),
@@ -470,11 +465,6 @@ rule "R35 - Sin Fallas Electricas"
 		}
 end
 
-										   /////*******FIN DIAGNOSTICO ELECTRICO********/////
-										   
-										   
-										   /////******DIAGNOSTICO ELECTROMECANICO*******/////
-										   
 rule "R36 - Falla En Sistema Frenos"
    when
        $atraccion: MontaniaRusa(
@@ -487,7 +477,7 @@ rule "R36 - Falla En Sistema Frenos"
 		}
 end
 
-rule "R37 - Insuficiente Aciete Depositos"
+rule "R37 - Insuficiente Aceite Depositos"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.TanqueSinSuficienteAceite),
@@ -571,10 +561,7 @@ rule "R42 - Sin Fallas Electromecanicas"
        		resultadoFinal.diagnosticoElectromecanico.setResultadoElectromecanico(ResultadoFinalDiagnosticoElectromecanico.SinFallasElectromecanicas);
 		}
 end																				   								   
-										   
-										   /////******FIN DIAGNOSTICO ELECTROMECANICO*******/////
-										   
-										   	  /////******DIAGNOSTICO OPERATIVIDAD*******/////
+
 										   
 rule "R45 - Revisar Frenos"
    when
@@ -583,9 +570,9 @@ rule "R45 - Revisar Frenos"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	//modify($atraccion){
-       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.RevisarFrenos);
-		//}
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.RevisarFrenos);
+		}
 end		
 
 
@@ -596,9 +583,9 @@ rule "R46 - Alinear Engranes"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	//modify($atraccion){
-       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.AlinearEngranes);
-		//}
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.AlinearEngranes);
+		}
 end
 
 rule "R47 - Cargar Deposito Aceite"
@@ -608,9 +595,9 @@ rule "R47 - Cargar Deposito Aceite"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	//modify($atraccion){
-       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.CargarDepositosAceite);
-		//}
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.CargarDepositosAceite);
+		}
 end
 
 
@@ -621,9 +608,9 @@ rule "R48 - Revisar Sensores"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	//modify($atraccion){
-       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.RevisarSensores);
-		//}
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.RevisarSensores);
+		}
 end
 
 rule "R49 - Revisar Tension"
@@ -633,9 +620,9 @@ rule "R49 - Revisar Tension"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	//modify($atraccion){
-       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.RevisarNivelTension);
-		//}
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.RevisarNivelTension);
+		}
 end
 
 rule "R50 - Cargar Bateria PLC"
@@ -645,25 +632,38 @@ rule "R50 - Cargar Bateria PLC"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	//modify($atraccion){
-       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.CargarBateriaPLC);
-		//}
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.CargarBateriaPLC);
+		}
 end
 
 
 rule "R51 - No operativo por clima"
-   when
+    when
        $atraccion: MontaniaRusa(
-        	resultadoFinal.analisisClimatico.resultadoAnalisis.compare(ResultadoAnalisisClimatico.ClimaFavorable),
+        	resultadoFinal.analisisClimatico.resultadoAnalisis.compare(ResultadoAnalisisClimatico.ClimaDesfavorable),
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	//modify($atraccion){
-       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.JuegoNoOperativoPorClima);
-		//}
-end																	   
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.JuegoNoOperativoPorClima);
+       	}
+end
 
-rule "R52 - Operativo"
+rule "R52 - Revisar cinturones de seguridad"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.ProblemaEnCinturonesSeguridad),
+        	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.RevisarCinturonesSeguridad);
+		}
+end																				   
+
+
+rule "R53 - Operativo"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.analisisClimatico.resultadoAnalisis.compare(ResultadoAnalisisClimatico.ClimaFavorable),
@@ -671,10 +671,10 @@ rule "R52 - Operativo"
         	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
         	)
     then
-    	//modify($atraccion){
-       		$atraccion.resultadoFinal.setConsideracion(Consideraciones.Operativo);
-		//}
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.Operativo);
+		}
 end											   
-										   
-										   /////******FIN DIAGNOSTICO OPERATIVIDAD*******/////
+								   
+					
 										   

@@ -35,21 +35,12 @@ public class TestCaseUtils {
 		System.out.println("");
 	}
 
-	
-	/*
-	public static void assertResults(DiagnosticoOperatividad recomendacion, AccionRecomendada valorEsperado) {
-		AccionRecomendada accion = recomendacion.getAccion();
-		printResults(accion.toString(), valorEsperado.toString());
-		assert(accion.isa(valorEsperado));
-	}
-
-	private static void printResults(String result,String expected) {
-		print("Resultados");
-		print("Esperaba: " + expected);
-		print("Recibi: " + result);
+	public static void printResults(String result,String expected) {
+		System.out.println("----------Resultados-----------");
+		System.out.println("Esperaba: " + expected);
+		System.out.println("Recibi: " + result);
 		Boolean isOk = result.equals(expected);
 		String condition = isOk ? "Ok" : "Fallo";
-		print("Caso de prueba: "+ condition);
+		System.out.println("Caso de prueba: "+ condition);
 	}
-	*/
 }

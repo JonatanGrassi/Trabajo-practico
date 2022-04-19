@@ -3,13 +3,14 @@ package conceptos;
 import atributos.ResultadoAnalisisClimatico;
 
 public class AnalisisClimatico {
+	
+	ResultadoAnalisisClimatico resultadoAnalisis;
 	@Override
 	public String toString() {
 		return "AnalisisClimatico [resultadoAnalisis=" + resultadoAnalisis + "]";
 	}
 
-	ResultadoAnalisisClimatico resultadoAnalisis;
-	
+
 	public AnalisisClimatico() {
 		this.resultadoAnalisis = ResultadoAnalisisClimatico.NoDeterminado;
 	}

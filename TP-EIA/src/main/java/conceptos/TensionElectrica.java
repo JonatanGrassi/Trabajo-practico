@@ -6,7 +6,7 @@ public class TensionElectrica {
 	static int MIN_TENSION = 500;
 	static int MAX_TENSION = 700;
 	
-	public void setNivelCargaBateriaPLC(int nivelDeVoltaje) {
+	public void setNivelDeVoltaje(int nivelDeVoltaje) {
 		
 		if (nivelDeVoltaje > MAX_TENSION) {
 			throw new IllegalArgumentException("nivelDeVoltaje: maximo valor permitido " + MAX_TENSION + " %.");
