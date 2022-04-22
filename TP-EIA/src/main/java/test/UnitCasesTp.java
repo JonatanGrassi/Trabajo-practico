@@ -9,7 +9,7 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 
 import atributos.Consideraciones;
-import atributos.EstadoCorrocion;
+import atributos.EstadoCorrosion;
 import atributos.IntegridadFrenos;
 import atributos.OperatividadSensorParada;
 import atributos.OperatividadSensoresMonitoreo;
@@ -28,14 +28,10 @@ import utils.TestCaseUtils;
 
 public class UnitCasesTp {
 
-	// Buscar archivo kmodule.xml. El nombre de la sesion debe ser igual al
-	// configurado en ese archivo
 	String K_SESSION_NAME = "montaniaRusa-session";
 
 	KieSession sessionStatefull;
 	static KieContainer kieContainer;
-
-	FactHandle automovilDir;
 
 	public UnitCasesTp() {
 	}
@@ -83,7 +79,7 @@ public class UnitCasesTp {
 		tension.setNivelDeVoltaje(610);
 
 		Freno frenos = new Freno();
-		frenos.setCorrocion(EstadoCorrocion.NoPresentaCorrocion);
+		frenos.setCorrosion(EstadoCorrosion.NoPresentaCorrosion);
 		frenos.setEspesorPastillas(6);
 		frenos.setPotenciaImanes(14500);
 
@@ -125,7 +121,7 @@ public class UnitCasesTp {
 		tension.setNivelDeVoltaje(610);
 
 		Freno frenos = new Freno();
-		frenos.setCorrocion(EstadoCorrocion.NoPresentaCorrocion);
+		frenos.setCorrosion(EstadoCorrosion.NoPresentaCorrosion);
 		frenos.setEspesorPastillas(6);
 		frenos.setPotenciaImanes(14500);
 
@@ -167,7 +163,7 @@ public class UnitCasesTp {
 		tension.setNivelDeVoltaje(610);
 
 		Freno frenos = new Freno();
-		frenos.setCorrocion(EstadoCorrocion.NoPresentaCorrocion);
+		frenos.setCorrosion(EstadoCorrosion.NoPresentaCorrosion);
 		frenos.setEspesorPastillas(6);
 		frenos.setPotenciaImanes(14500);
 
@@ -209,7 +205,7 @@ public class UnitCasesTp {
 		tension.setNivelDeVoltaje(610);
 
 		Freno frenos = new Freno();
-		frenos.setCorrocion(EstadoCorrocion.NoPresentaCorrocion);
+		frenos.setCorrosion(EstadoCorrosion.NoPresentaCorrosion);
 		frenos.setEspesorPastillas(6);
 		frenos.setPotenciaImanes(13000);
 
@@ -251,7 +247,7 @@ public class UnitCasesTp {
 		tension.setNivelDeVoltaje(610);
 
 		Freno frenos = new Freno();
-		frenos.setCorrocion(EstadoCorrocion.NoPresentaCorrocion);
+		frenos.setCorrosion(EstadoCorrosion.NoPresentaCorrosion);
 		frenos.setEspesorPastillas(6);
 		frenos.setPotenciaImanes(14500);
 
@@ -293,7 +289,7 @@ public class UnitCasesTp {
 		tension.setNivelDeVoltaje(610);
 
 		Freno frenos = new Freno();
-		frenos.setCorrocion(EstadoCorrocion.NoPresentaCorrocion);
+		frenos.setCorrosion(EstadoCorrosion.NoPresentaCorrosion);
 		frenos.setEspesorPastillas(6);
 		frenos.setPotenciaImanes(14500);
 
@@ -334,7 +330,7 @@ public class UnitCasesTp {
 		tension.setNivelDeVoltaje(610);
 
 		Freno frenos = new Freno();
-		frenos.setCorrocion(EstadoCorrocion.NoPresentaCorrocion);
+		frenos.setCorrosion(EstadoCorrosion.NoPresentaCorrosion);
 		frenos.setEspesorPastillas(6);
 		frenos.setPotenciaImanes(14500);
 
@@ -375,7 +371,7 @@ public class UnitCasesTp {
 		tension.setNivelDeVoltaje(510);
 
 		Freno frenos = new Freno();
-		frenos.setCorrocion(EstadoCorrocion.NoPresentaCorrocion);
+		frenos.setCorrosion(EstadoCorrosion.NoPresentaCorrosion);
 		frenos.setEspesorPastillas(6);
 		frenos.setPotenciaImanes(14500);
 
@@ -416,7 +412,7 @@ public class UnitCasesTp {
 		tension.setNivelDeVoltaje(610);
 
 		Freno frenos = new Freno();
-		frenos.setCorrocion(EstadoCorrocion.NoPresentaCorrocion);
+		frenos.setCorrosion(EstadoCorrosion.NoPresentaCorrosion);
 		frenos.setEspesorPastillas(6);
 		frenos.setPotenciaImanes(14500);
 

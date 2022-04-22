@@ -1,10 +1,10 @@
 package conceptos;
 
-import atributos.EstadoCorrocion;
+import atributos.EstadoCorrosion;
 
 public class Freno {
 	public int espesorPastillas;
-	public EstadoCorrocion corrocion;
+	public EstadoCorrosion corrosion;
 	public int potenciaImanes;
 	
 	static int MIN_ESPESOR_PASTILLAS = 2;
@@ -41,11 +41,11 @@ public class Freno {
 		return espesorPastillas;
 	}
 	
-	public EstadoCorrocion getCorrocion() {
-		return corrocion;
+	public EstadoCorrosion getCorrosion() {
+		return corrosion;
 	}
-	public void setCorrocion(EstadoCorrocion corrocion ) {
-		this.corrocion = corrocion;
+	public void setCorrosion(EstadoCorrosion corrocion ) {
+		this.corrosion = corrocion;
 	}
 	
 	public int getPotenciaImanes() {
@@ -54,7 +54,7 @@ public class Freno {
 
 	@Override
 	public String toString() {
-		return "Freno [espesorPastillas=" + espesorPastillas + ", corrocion=" + corrocion + ", potenciaImanes="
+		return "Freno [espesorPastillas=" + espesorPastillas + ", corrocion=" + corrosion + ", potenciaImanes="
 				+ potenciaImanes + "]";
 	}
 	

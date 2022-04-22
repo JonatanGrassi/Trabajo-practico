@@ -13,7 +13,7 @@ import atributos.ResultadoAnalisisClimatico;
 import atributos.ResultadoFinalDiagnosticoElectromecanico;
 import atributos.ResultadoFinalDiagnosticoMecanico;
 import atributos.IntegridadFrenos;
-import atributos.EstadoCorrocion;
+import atributos.EstadoCorrosion;
 import atributos.AlineacionEngranes;
 import atributos.NivelDepositoAceite;
 import atributos.DesgasteCinturon;
@@ -97,7 +97,7 @@ end
 rule "R06 - Corrocion en frenos"
     when
         $atraccion: MontaniaRusa(
-    		frenos.corrocion.compare(EstadoCorrocion.PresentaCorrocion),
+    		frenos.corrosion.compare(EstadoCorrosion.PresentaCorrosion),
         	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.NoDeterminado)
         )
     then
@@ -109,7 +109,7 @@ end
 rule "R07 - Frenos sin fallas"
     when
         $atraccion: MontaniaRusa(
-    		frenos.corrocion.compare(EstadoCorrocion.NoPresentaCorrocion),
+    		frenos.corrosion.compare(EstadoCorrosion.NoPresentaCorrosion),
     		frenos.espesorPastillas > 4,
     		frenos.potenciaImanes >= 14200,
         	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.NoDeterminado)
@@ -240,7 +240,7 @@ rule "R17 - Falla Frenos Magneticos"
 		}
 end
 
-rule "R18 - Falla Frenos Corrocion"
+rule "R18 - Falla Frenos Corrosion"
     when
         $atraccion: MontaniaRusa(
     		resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.integridadFrenos.compare(IntegridadFrenos.FrenosDañadosCorrosion),
@@ -291,21 +291,7 @@ rule "R21 - Sin Fallas Mecanicas"
 		}
 end
 
-/*
-rule "R22 - Deposito sin aceite"
-    when
-        $atraccion: MontaniaRusa(
-    		depositoAceite.nivelAceite <= 90,
-        	resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.nivelDeTension.compare(NivelTension.NoDeterminado)
-        )
-    then
-    	modify($atraccion){
-       		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.setNivelDeTension(NivelTension.BajaTension); 
-		}
-end
-*/
-
-rule "R23 - Baja tension"
+rule "R22 - Baja tension"
     when
         $atraccion: MontaniaRusa(
     		tension.nivelDeVoltaje <= 580,
@@ -317,7 +303,7 @@ rule "R23 - Baja tension"
 		}
 end
 
-rule "R24 - Alta tension"
+rule "R23 - Alta tension"
     when
         $atraccion: MontaniaRusa(
     		tension.nivelDeVoltaje > 690,
@@ -329,7 +315,7 @@ rule "R24 - Alta tension"
 		}
 end
 
-rule "R25 - Correcta tension"
+rule "R24 - Correcta tension"
     when
         $atraccion: MontaniaRusa(
     		tension.nivelDeVoltaje > 580,
@@ -342,7 +328,7 @@ rule "R25 - Correcta tension"
 		}
 end
 
-rule "R26 - Sensor parada no operativo"
+rule "R25 - Sensor parada no operativo"
     when
         $atraccion: MontaniaRusa(
     		monitoreo.operatividadSensorParada.compare(OperatividadSensorParada.NoOperativo),
@@ -354,7 +340,7 @@ rule "R26 - Sensor parada no operativo"
 		}
 end
 
-rule "R27 - Sensores monitoreo no operativo"
+rule "R26 - Sensores monitoreo no operativo"
    when
         $atraccion: MontaniaRusa(
     		monitoreo.operatividadSensoresMonitoreo.compare(OperatividadSensoresMonitoreo.NoOperativo),
@@ -366,7 +352,7 @@ rule "R27 - Sensores monitoreo no operativo"
 		}
 end
 
-rule "R28 - Funcionamiento Sensores operativos"
+rule "R27 - Funcionamiento Sensores operativos"
    when
         $atraccion: MontaniaRusa(
     		monitoreo.operatividadSensoresMonitoreo.compare(OperatividadSensoresMonitoreo.Operativo),
@@ -379,7 +365,7 @@ rule "R28 - Funcionamiento Sensores operativos"
 		}
 end
 
-rule "R29 - Nivel carga bateria PLC suficiente"
+rule "R28 - Nivel carga bateria PLC suficiente"
    when
         $atraccion: MontaniaRusa(
     		monitoreo.NivelCargaBateriaPLC > 80,
@@ -391,7 +377,7 @@ rule "R29 - Nivel carga bateria PLC suficiente"
 		}
 end
 
-rule "R30 - Nivel carga bateria PLC insuficiente"
+rule "R29 - Nivel carga bateria PLC insuficiente"
    when
         $atraccion: MontaniaRusa(
     		monitoreo.NivelCargaBateriaPLC <= 80,
@@ -403,7 +389,7 @@ rule "R30 - Nivel carga bateria PLC insuficiente"
 		}
 end
 
-rule "R31 - Problemas Tension Baja"
+rule "R30 - Problemas Tension Baja"
    when
        $atraccion: MontaniaRusa(
     		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.nivelDeTension.compare(NivelTension.BajaTension),
@@ -415,7 +401,7 @@ rule "R31 - Problemas Tension Baja"
 		}
 end
 
-rule "R32 - Problemas Tension Alta"
+rule "R31 - Problemas Tension Alta"
    when
        $atraccion: MontaniaRusa(
     		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.nivelDeTension.compare(NivelTension.AltaTension),
@@ -427,7 +413,7 @@ rule "R32 - Problemas Tension Alta"
 		}
 end
 
-rule "R33 - Problemas Sensores"
+rule "R32 - Problemas Sensores"
    when
        $atraccion: MontaniaRusa(
     		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.sensores.compare(FuncionamientoSensores.SensoresNoOperativos),
@@ -439,7 +425,7 @@ rule "R33 - Problemas Sensores"
 		}
 end
 
-rule "R34 - Bateria Insuficiente PLC"
+rule "R33 - Bateria Insuficiente PLC"
    when
        $atraccion: MontaniaRusa(
     		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.bateriaPLC.compare(BateriaPLC.Insuficiente),
@@ -451,7 +437,7 @@ rule "R34 - Bateria Insuficiente PLC"
 		}
 end
 
-rule "R35 - Sin Fallas Electricas"
+rule "R34 - Sin Fallas Electricas"
    when
        $atraccion: MontaniaRusa(
     		resultadoFinal.diagnosticoElectromecanico.diagnosticoElectrico.bateriaPLC.compare(BateriaPLC.Suficiente),
@@ -465,7 +451,7 @@ rule "R35 - Sin Fallas Electricas"
 		}
 end
 
-rule "R36 - Falla En Sistema Frenos"
+rule "R35 - Falla En Sistema Frenos"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.FallaEnFrenos),
@@ -477,7 +463,7 @@ rule "R36 - Falla En Sistema Frenos"
 		}
 end
 
-rule "R37 - Insuficiente Aceite Depositos"
+rule "R36 - Insuficiente Aceite Depositos"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.TanqueSinSuficienteAceite),
@@ -489,7 +475,7 @@ rule "R37 - Insuficiente Aceite Depositos"
 		}
 end
 
-rule "R38 - Problemas Cinturones Seguridad"
+rule "R37 - Problemas Cinturones Seguridad"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.FallaCinturones),
@@ -501,7 +487,7 @@ rule "R38 - Problemas Cinturones Seguridad"
 		}
 end
 
-rule "R39 - Falla Sistemas Engranes"
+rule "R38 - Falla Sistemas Engranes"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.diagnosticoElectromecanico.diagnosticoMecanico.resultadoMecanico.compare(ResultadoFinalDiagnosticoMecanico.FallaEngranes),
@@ -563,7 +549,7 @@ rule "R42 - Sin Fallas Electromecanicas"
 end																				   								   
 
 										   
-rule "R45 - Revisar Frenos"
+rule "R43 - Revisar Frenos"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.FallaEnSistemaFrenos),
@@ -576,7 +562,7 @@ rule "R45 - Revisar Frenos"
 end		
 
 
-rule "R46 - Alinear Engranes"
+rule "R44 - Alinear Engranes"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.FallaEnSistemaEngranes),
@@ -588,7 +574,7 @@ rule "R46 - Alinear Engranes"
 		}
 end
 
-rule "R47 - Cargar Deposito Aceite"
+rule "R45 - Cargar Deposito Aceite"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.InsuficienteAceitedepositos),
@@ -601,7 +587,7 @@ rule "R47 - Cargar Deposito Aceite"
 end
 
 
-rule "R48 - Revisar Sensores"
+rule "R46 - Revisar Sensores"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.FallaEnSistemaDeSensores),
@@ -613,7 +599,7 @@ rule "R48 - Revisar Sensores"
 		}
 end
 
-rule "R49 - Revisar Tension"
+rule "R47 - Revisar Tension"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.TensionInadecuada),
@@ -625,7 +611,19 @@ rule "R49 - Revisar Tension"
 		}
 end
 
-rule "R50 - Cargar Bateria PLC"
+rule "R48 - Revisar cinturones de seguridad"
+   when
+       $atraccion: MontaniaRusa(
+        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.ProblemaEnCinturonesSeguridad),
+        	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
+        	)
+    then
+    	modify($atraccion){
+       		resultadoFinal.setConsideracion(Consideraciones.RevisarCinturonesSeguridad);
+		}
+end		
+
+rule "R49 - Cargar Bateria PLC"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.CargaBateriaPLCInsuficiente),
@@ -638,7 +636,7 @@ rule "R50 - Cargar Bateria PLC"
 end
 
 
-rule "R51 - No operativo por clima"
+rule "R50 - No operativo por clima"
     when
        $atraccion: MontaniaRusa(
         	resultadoFinal.analisisClimatico.resultadoAnalisis.compare(ResultadoAnalisisClimatico.ClimaDesfavorable),
@@ -650,20 +648,8 @@ rule "R51 - No operativo por clima"
        	}
 end
 
-rule "R52 - Revisar cinturones de seguridad"
-   when
-       $atraccion: MontaniaRusa(
-        	resultadoFinal.diagnosticoElectromecanico.resultadoElectromecanico.compare(ResultadoFinalDiagnosticoElectromecanico.ProblemaEnCinturonesSeguridad),
-        	resultadoFinal.consideracion.compare(Consideraciones.NoDeterminada)
-        	)
-    then
-    	modify($atraccion){
-       		resultadoFinal.setConsideracion(Consideraciones.RevisarCinturonesSeguridad);
-		}
-end																				   
-
-
-rule "R53 - Operativo"
+																		   
+rule "R51 - Operativo"
    when
        $atraccion: MontaniaRusa(
         	resultadoFinal.analisisClimatico.resultadoAnalisis.compare(ResultadoAnalisisClimatico.ClimaFavorable),
@@ -674,7 +660,4 @@ rule "R53 - Operativo"
     	modify($atraccion){
        		resultadoFinal.setConsideracion(Consideraciones.Operativo);
 		}
-end											   
-								   
-					
-										   
+end											   							   
